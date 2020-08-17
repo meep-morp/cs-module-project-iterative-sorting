@@ -18,17 +18,21 @@ def linear_search(arr, target):
 
 
 # Write an iterative implementation of Binary Search
-def binary_search(arr, target):
-    first = 0
-    last = len(arr)-1
-    found = -1
-    while(first <= last and found == -1):
-        mid = (first + last)//2
-        if arr[mid] == target:
-            found = mid
-        else:
-            if target < arr[mid]:
-                last = mid - 1
-            else:
-                first = mid + 1
-    return found
+def binary_search(arr, target, start=0, end=None):
+    arr = selection_sort(arr)
+
+    if end is None:
+        end = len(arr) - 1
+
+    if start > end:
+        return -1
+
+# Stack Overflow helped with this :D
+    mid = (start + end) // 2
+    if target == arr[mid]:
+        return mid
+
+    if target < arr[mid]:
+        return binary_search(arr, target, start, mid-1)
+
+    return binary_search(arr, target, mid+1, end)
